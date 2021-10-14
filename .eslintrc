@@ -1,6 +1,6 @@
 {
   "extends": ["eslint:recommended", "prettier"],
-  "plugins": ["prettier"],
+  "plugins": ["import", "prettier"],
   "env": {
     "es6": true,
     "node": true
@@ -10,6 +10,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "import/no-unresolved": [2, { "commonjs": true }],
     "prettier/prettier": "error",
     "no-console": 2
   },

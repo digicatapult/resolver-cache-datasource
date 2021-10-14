@@ -1,4 +1,0 @@
-image:
-  repository: 'wasp-service-template'
-  tag: 'latest'
-  PullPolicy: Never
