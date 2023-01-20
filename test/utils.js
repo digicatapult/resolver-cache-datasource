@@ -1,11 +1,12 @@
-const { before } = require('mocha')
+import { before } from 'mocha'
 
-const express = require('express')
-const { ApolloServer } = require('apollo-server-express')
-const { InMemoryLRUCache } = require('apollo-server-caching')
-const request = require('supertest')
-
-const { ResolverCacheDataSource } = require('../')
+import express from 'express'
+import { ApolloServer } from '@apollo/server'
+import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
+import request from 'supertest'
+import { expressMiddleware } from '@apollo/server/express4'
+import cors from 'cors'
+import { ResolverCacheDataSource } from '../lib/index.js'
 
 function mkClient(express) {
   const app = request(express)
@@ -24,27 +25,34 @@ function mkClient(express) {
   }
 }
 
-module.exports.setup = function (context) {
+export function setup(context) {
   before(async function () {
     const cache = context.cache || new InMemoryLRUCache()
     const server = new ApolloServer({
       typeDefs: context.typeDefs,
       resolvers: context.resolvers,
       cache,
-      dataSources: () => {
-        return {
-          autoResolver: new ResolverCacheDataSource({
-            defaultTTL: 100,
-          }),
-        }
-      },
-      context: async () => {
-        return context.context || null
-      },
     })
 
     const app = express()
-    server.applyMiddleware({ app })
+
+    await server.start()
+    app.use(
+      '/graphql',
+      cors(),
+      express.json(),
+      expressMiddleware(server, {
+        context: async ({ req }) => ({
+          token: req.headers.token,
+          dataSources: {
+            autoResolver: new ResolverCacheDataSource({
+              cache,
+              defaultTTL: 100,
+            }),
+          },
+        }),
+      })
+    )
     context.client = mkClient(app)
     context.cache = cache
   })

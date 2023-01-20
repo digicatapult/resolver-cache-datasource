@@ -1,11 +1,11 @@
-const { before, after, describe, it } = require('mocha')
-const { gql } = require('apollo-server-express')
-const { expect } = require('chai')
-const sinon = require('sinon')
+import { before, after, describe, it } from 'mocha'
+import gql from 'graphql-tag'
+import { expect } from 'chai'
+import { spy, useFakeTimers } from 'sinon'
 
-const { setup } = require('./utils')
+import { setup } from './utils.js'
 
-const { withCaching } = require('../')
+import { withCaching } from '../lib/index.js'
 
 const simpleTypeDefs = gql`
   type Query {
@@ -93,7 +93,7 @@ describe('ResolverCacheDataSource', function () {
     it('should query the resolvers when there is nothing in the cache', async function () {
       const res = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
 
       expect(res).to.deep.equal(simpleExpect)
@@ -125,14 +125,14 @@ describe('ResolverCacheDataSource', function () {
     it('should query the resolvers when there is nothing in the cache', async function () {
       const resA = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
       // mutate mul to change the result in the resolver
       mul = mul + 1
       // requery
       const resB = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
 
       // should get original result
@@ -141,7 +141,7 @@ describe('ResolverCacheDataSource', function () {
   })
 
   describe('caching within query', function () {
-    const propResolverFn = sinon.spy((i) => 2 * i)
+    const propResolverFn = spy((i) => 2 * i)
     const context = {
       propResolverFn,
       typeDefs: simpleTypeDefs,
@@ -174,7 +174,7 @@ describe('ResolverCacheDataSource', function () {
             }
           }
         `,
-        variables: [],
+        variables: {},
       })
 
       expect(res).to.deep.equal({
@@ -213,7 +213,7 @@ describe('ResolverCacheDataSource', function () {
       // query to warm the cache
       await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
       // mutate mul to change the result in the resolver
       mul = mul + 1
@@ -225,7 +225,7 @@ describe('ResolverCacheDataSource', function () {
       // requery
       const res = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
 
       // should get original result
@@ -256,7 +256,7 @@ describe('ResolverCacheDataSource', function () {
     setup(context)
 
     before(function () {
-      context.timer = sinon.useFakeTimers()
+      context.timer = useFakeTimers()
     })
 
     after(function () {
@@ -266,7 +266,7 @@ describe('ResolverCacheDataSource', function () {
     it('should query the resolvers when there is nothing in the cache', async function () {
       await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
       // mutate mul to change the result in the resolver
       mul = mul + 1
@@ -276,7 +276,7 @@ describe('ResolverCacheDataSource', function () {
       // requery
       const res = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
 
       // should get original result
@@ -309,7 +309,7 @@ describe('ResolverCacheDataSource', function () {
     setup(context)
 
     before(function () {
-      context.timer = sinon.useFakeTimers()
+      context.timer = useFakeTimers()
     })
 
     after(function () {
@@ -319,7 +319,7 @@ describe('ResolverCacheDataSource', function () {
     it('should query the resolvers when there is nothing in the cache', async function () {
       const resA = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
       // mutate mul to change the result in the resolver
       mul = mul + 1
@@ -329,7 +329,7 @@ describe('ResolverCacheDataSource', function () {
       // requery
       const resB = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
 
       // should get original result
