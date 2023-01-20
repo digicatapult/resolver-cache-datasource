@@ -69,7 +69,7 @@ const missExpect = {
 }
 
 describe('ResolverCacheDataSource', function () {
-  describe.only('empty cache', function () {
+  describe('empty cache', function () {
     const context = {
       typeDefs: simpleTypeDefs,
       resolvers: {
@@ -93,7 +93,7 @@ describe('ResolverCacheDataSource', function () {
     it('should query the resolvers when there is nothing in the cache', async function () {
       const res = await context.client.query({
         query: simpleQuery,
-        // variables: [],
+        variables: {},
       })
 
       expect(res).to.deep.equal(simpleExpect)
@@ -125,14 +125,14 @@ describe('ResolverCacheDataSource', function () {
     it('should query the resolvers when there is nothing in the cache', async function () {
       const resA = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
       // mutate mul to change the result in the resolver
       mul = mul + 1
       // requery
       const resB = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
 
       // should get original result
@@ -174,7 +174,7 @@ describe('ResolverCacheDataSource', function () {
             }
           }
         `,
-        variables: [],
+        variables: {},
       })
 
       expect(res).to.deep.equal({
@@ -213,7 +213,7 @@ describe('ResolverCacheDataSource', function () {
       // query to warm the cache
       await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
       // mutate mul to change the result in the resolver
       mul = mul + 1
@@ -225,7 +225,7 @@ describe('ResolverCacheDataSource', function () {
       // requery
       const res = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
 
       // should get original result
@@ -266,7 +266,7 @@ describe('ResolverCacheDataSource', function () {
     it('should query the resolvers when there is nothing in the cache', async function () {
       await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
       // mutate mul to change the result in the resolver
       mul = mul + 1
@@ -276,7 +276,7 @@ describe('ResolverCacheDataSource', function () {
       // requery
       const res = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
 
       // should get original result
@@ -319,7 +319,7 @@ describe('ResolverCacheDataSource', function () {
     it('should query the resolvers when there is nothing in the cache', async function () {
       const resA = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
       // mutate mul to change the result in the resolver
       mul = mul + 1
@@ -329,7 +329,7 @@ describe('ResolverCacheDataSource', function () {
       // requery
       const resB = await context.client.query({
         query: simpleQuery,
-        variables: [],
+        variables: {},
       })
 
       // should get original result

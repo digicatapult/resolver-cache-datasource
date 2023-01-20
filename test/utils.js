@@ -46,6 +46,7 @@ export function setup(context) {
           token: req.headers.token,
           dataSources: {
             autoResolver: new ResolverCacheDataSource({
+              cache,
               defaultTTL: 100,
             }),
           },
