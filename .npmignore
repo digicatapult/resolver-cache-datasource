@@ -1,0 +1,9 @@
+.github
+example
+scripts
+test
+
+.eslintignore
+.eslintrc
+.c8rc
+.prettierrc

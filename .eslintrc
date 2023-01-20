@@ -1,16 +1,15 @@
 {
   "extends": ["eslint:recommended", "prettier"],
-  "plugins": ["import", "prettier"],
+  "plugins": ["prettier"],
   "env": {
     "es6": true,
     "node": true
   },
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 9,
-    "sourceType": "module"
+    "requireConfigFile": false,
   },
   "rules": {
-    "import/no-unresolved": [2, { "commonjs": true }],
     "prettier/prettier": "error",
     "no-console": 2
   },
