@@ -68,18 +68,12 @@ jobs:
         run: npm run test
 
   check-version:
-    name: "Check version"
-    needs: [lint, dependency-check, tests]
+    name: 'Check version'
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-      - run: git fetch --depth=1 --tags origin
-      - name: Check Build Version
+      - name: Check version
         id: get_version
-        run: ./scripts/check-version.sh
-        shell: bash
-      - name: Error if version is not increased
-        shell: bash
-        run: |
-          exit $([[ "${{steps.get_version.outputs.IS_NEW_VERSION}}" = "true" ]] && echo 0 || echo 1)
+        uses: digicatapult/check-version@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
