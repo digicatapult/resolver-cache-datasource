@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/resolver-cache-datasource",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Resolver caching DataSource for Apollo GraphQL projects",
   "main": "lib/index.js",
   "author": "Digital Catapult (https://www.digicatapult.org.uk/)",
@@ -46,7 +46,7 @@
     "graphql-tag": "^2.12.6",
     "mocha": "^10.2.0",
     "prettier": "^3.0.2",
-    "sinon": "^15.2.0",
+    "sinon": "^16.0.0",
     "supertest": "^6.3.3"
   }
 }
