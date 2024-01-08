@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/resolver-cache-datasource",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "description": "Resolver caching DataSource for Apollo GraphQL projects",
   "main": "lib/index.js",
   "author": "Digital Catapult (https://www.digicatapult.org.uk/)",
@@ -35,7 +35,7 @@
     "@apollo/utils.keyvaluecache": "^3.1.0",
     "@babel/eslint-parser": "^7.23.3",
     "c8": "^8.0.1",
-    "chai": "^4.3.10",
+    "chai": "^4.4.0",
     "cors": "^2.8.5",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
